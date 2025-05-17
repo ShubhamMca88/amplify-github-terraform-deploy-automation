@@ -1,30 +1,13 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 resource "aws_amplify_app" "myapp" {
   name       = var.amplify_app_name
-  repository = "${var.github_repo}"
-  oauth_token = var.github_token
+  repository = var.github_repo
 
-  build_spec = <<-EOT
-    version: 1.0
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm ci
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: build
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
-    EOT
+  # oauth_token  = var.github_token
+  # access_token = var.github_token
+  # ONE TIME MANUAL STEP GO TO AWS CONSOLE 
+
+
+  build_spec = file("buildspec.yml")
 
   environment_variables = {
     EXAMPLE = "value"
