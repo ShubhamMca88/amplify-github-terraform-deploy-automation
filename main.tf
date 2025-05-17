@@ -2,9 +2,9 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_amplify_app" "this" {
+resource "aws_amplify_app" "myapp" {
   name       = var.amplify_app_name
-  repository = "https://github.com/${var.github_repo}"
+  repository = "${var.github_repo}"
   oauth_token = var.github_token
 
   build_spec = <<-EOT
@@ -32,6 +32,6 @@ resource "aws_amplify_app" "this" {
 }
 
 resource "aws_amplify_branch" "main" {
-  app_id      = aws_amplify_app.this.id
+  app_id      = aws_amplify_app.myapp.id
   branch_name = var.github_branch
 } 
